@@ -135,7 +135,8 @@ Buy and manage your domain through **Cloudflare Registrar** ([cloudflare.com/pro
 
 1. Sign in to Cloudflare → **Domain Registration** → **Register Domains**
 2. Search for your domain and purchase it
-3. DNS is managed automatically within Cloudflare — no nameserver changes needed
+3. DNS is managed automatica
+puonthế lly within Cloudflare — no nameserver changes needed
 4. After your VPS is provisioned (Step 2), come back and add an **A record**:
    - Go to your domain → **DNS** → **Records** → **Add record**
    - **Type:** A
