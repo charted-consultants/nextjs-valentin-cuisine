@@ -27,6 +27,9 @@ export function OrderTab() {
           email: form.email,
           occasion: `Waiting list signup${form.optIn ? ' (opted into updates)' : ''}`,
           details: `Location: ${form.location || 'not given'}\nWhat they want to try: ${form.wantsToTry || 'not given'}`,
+          location: form.location || null,
+          wantsToTry: form.wantsToTry || null,
+          optIn: form.optIn,
         }),
       });
       setStatus(res.ok ? 'sent' : 'error');

@@ -13,6 +13,7 @@ const navigation = [
   { name: "References", href: "/admin/references" },
   { name: "Media", href: "/admin/media" },
   { name: "Site Content", href: "/admin/content" },
+  { name: "Email", href: "/admin/email" },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -178,3 +178,29 @@ model MediaItem {
 
   @@map("media_library")
 }
+
+// ── EMAIL ─────────────────────────────────────────────────────────────────────
+
+// People who signed up via the waiting list form on the homepage
+model WaitingListSignup {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  location    String?
+  wantsToTry  String?  @map("wants_to_try")
+  optIn       Boolean  @default(false) @map("opt_in")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("waiting_list_signups")
+}
+
+// Log of outbound email campaigns sent to subscribers
+model EmailCampaign {
+  id             Int      @id @default(autoincrement())
+  subject        String
+  body           String
+  recipientCount Int      @default(0) @map("recipient_count")
+  sentAt         DateTime @default(now()) @map("sent_at")
+
+  @@map("email_campaigns")
+}

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
+import { prisma } from "@/lib/prisma"
 
 export const dynamic = 'force-dynamic'
 
@@ -10,7 +11,7 @@ function getResend() {
 }
 
 export async function POST(req: NextRequest) {
-  const { name, email, phone, occasion, details } = await req.json()
+  const { name, email, phone, occasion, details, location, wantsToTry, optIn } = await req.json()
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required" }, { status: 400 })
@@ -19,6 +20,25 @@ export async function POST(req: NextRequest) {
   const to = process.env.CONTACT_TO_EMAIL
   if (!to) {
     return NextResponse.json({ error: "Email not configured" }, { status: 500 })
+  }
+
+  // Persist waiting list signups to the database
+  const isWaitingList = occasion && occasion.includes("Waiting list signup")
+  if (isWaitingList) {
+    try {
+      await prisma.waitingListSignup.create({
+        data: {
+          name,
+          email,
+          location: location ?? null,
+          wantsToTry: wantsToTry ?? null,
+          optIn: optIn === true || occasion.includes("opted into updates"),
+        },
+      })
+    } catch (err) {
+      console.error("[CONTACT] Failed to save waiting list signup:", err)
+      // Do not block the email send if DB write fails
+    }
   }
 
   try {
